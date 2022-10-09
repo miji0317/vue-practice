@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <!-- html a 태그와 같은 역할, 특정 페이지로 이동시켜줌 -->
+        <router-link to="/login">Login</router-link>
+        <router-link to="/main">Main</router-link>
+      </div>
+      <!-- 뷰 인스턴스에 라우터를 연결해야 router-view 사용 가능 -->
+      <!-- router-view - url에 따라 해당 하는 컴포넌트를 보여줌 -->
+      <router-view></router-view>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- CDN vue-router -->
+    <script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+
+    <script>
+      var LoginComponent = {
+        template: "<div>login</div>",
+      };
+      var MainComponent = {
+        template: "<div>main</div>",
+      };
+
+      // 라우터 생성
+      var router = new VueRouter({
+        mode: "history", // url에서 # 제거
+        // routes - 페이지의 라우팅 정보
+        routes: [
+          {
+            // path - 페이지의 url
+            path: "/login",
+            // component - 해당 url에서 표시될 컴포넌트
+            // url마다 컴포넌트 하나씩 연결하기 때문에 component
+            component: LoginComponent,
+          },
+          {
+            path: "/main",
+            component: MainComponent,
+          },
+        ],
+      });
+
+      new Vue({
+        el: "#app",
+        // 인스턴스에 라우터 연결
+        router: router,
+      });
+    </script>
+  </body>
+</html>

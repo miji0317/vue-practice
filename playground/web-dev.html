@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      var div = document.querySelector("#app");
+      var str = "hello world✨";
+
+      div.innerHTML = str;
+
+      // 기존 웹 개발 방식
+      // str의 내용이 바뀌고 div에 적용시키려면 innerhtml로 다시 갱신시켜주어야 함.
+      // -> Vue.js의 Reactivity를 활용하면 간편해짐
+      str = "hello";
+      div.innerHTML = str;
+    </script>
+  </body>
+</html>

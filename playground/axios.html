@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Axios</title>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="getData">get user</button>
+      <div>{{ users }}</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- CDN axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          users: [],
+        },
+        methods: {
+          getData: function () {
+            // axios를 호출하기 전의 this는 기본적인 인스턴스를 가리킴
+            // 그러나 호출한 후 then 안에서 호출하는 this는 실행컨텍스트에 의해 바뀜
+            // 따라서 this를 변수에 저장해놓고 then 안에서는 'vm.'으로 접근
+            var vm = this;
+            axios
+              .get("https://jsonplaceholder.typicode.com/users/")
+              .then(function (response) {
+                console.log(response.data);
+                vm.users = response.data;
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

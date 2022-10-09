@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- v-bind - id나 class 등록 -->
+      <p v-bind:id="uuid" v-bind:class="name">{{number}}</p>
+      <p>{{doubleNum}}</p>
+
+      <!-- v-if - loading이 참일 때 보임 -->
+      <div v-if="loading">Loading...</div>
+      <!-- v-else - loading이 거짓일 때 보임 -->
+      <div v-else>test user has been logged in</div>
+
+      <!-- v-show - loading이 참일 때 보임 -->
+      <!-- if ~ else는 실제로 돔을 제거하는 것이고 show는 display:none으로 css를 변경하여 안 보이게 함 -->
+      <div v-show="loading">Loading...</div>
+
+      <!-- v-model - input 값 구하기 -->
+      <input type="text" v-model="message" />
+      <p>{{message}}</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          number: 100,
+          uuid: "abc123",
+          name: "text-blue",
+          loading: true,
+          message: "",
+        },
+        // number의 값이 바뀌면 doubleNum도 같이 바뀜
+        computed: {
+          doubleNum: function () {
+            return this.number * 2;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
