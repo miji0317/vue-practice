@@ -19,7 +19,7 @@ import TodoList from "./components/TodoList.vue";
 import TodoFooter from "./components/TodoFooter.vue";
 
 export default {
-  data: function () {
+  data() {
     return {
       // todo list 목록을 담을 data
       todoItems: [],
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     addOneItem(todoItem) {
-      var obj = { completed: false, item: todoItem };
+      const obj = { completed: false, item: todoItem };
       // 로컬스토리지에 저장 key, value 형태
       // 로컬 스토리지에 저장할 때는 JSON.stringify
       localStorage.setItem(todoItem, JSON.stringify(obj));
@@ -54,7 +54,7 @@ export default {
   // 인스턴스가 생성되자 마자 호출되는 라이프사이클 훅
   created: function () {
     if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
+      for (let i = 0; i < localStorage.length; i++) {
         // 로컬스토리지의 데이터를 todoItems에 배열로 담음
         if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
           // 로컬스토리지에서 꺼낼 때는 JSON.parse
