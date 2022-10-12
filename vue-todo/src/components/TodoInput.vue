@@ -2,14 +2,28 @@
   <div class="inputBox shadow">
     <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo" />
     <span class="addContainer" v-on:click="addTodo"> + </span>
+    <ModalBox v-if="showModal" @close="showModal = false">
+      <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+      <h3 slot="header">
+        경고!
+        <span class="closeModalBtn btn" @click="showModal = false">❌</span>
+      </h3>
+      <div slot="body">내용을 입력해주세요.</div>
+    </ModalBox>
   </div>
 </template>
 
 <script>
+import ModalBox from "./common/ModalBox.vue";
+
 export default {
   data: function () {
     return {
       newTodoItem: "",
+      showModal: false,
     };
   },
   methods: {
@@ -17,12 +31,17 @@ export default {
       if (this.newTodoItem !== "") {
         this.$emit("addTodoItem", this.newTodoItem);
         this.clearInput();
+      } else {
+        this.showModal = !this.showModal;
       }
     },
     clearInput: function () {
       // 초기화
       this.newTodoItem = "";
     },
+  },
+  components: {
+    ModalBox,
   },
 };
 </script>
@@ -48,5 +67,8 @@ input:focus {
   width: 3rem;
   border-radius: 0 5px 5px 0;
   color: #fff;
+}
+.closeModalBtn {
+  color: #42b983;
 }
 </style>
