@@ -15,10 +15,7 @@ export default {
   methods: {
     addTodo: function () {
       if (this.newTodoItem !== "") {
-        var obj = { completed: false, item: this.newTodoItem };
-        // 로컬스토리지에 저장 key, value 형태
-        // 로컬 스토리지에 저장할 때는 JSON.stringify
-        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+        this.$emit("addTodoItem", this.newTodoItem);
         this.clearInput();
       }
     },

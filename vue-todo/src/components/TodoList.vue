@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li
-        v-for="(todoItem, index) in todoItems"
+        v-for="(todoItem, index) in propsdata"
         :key="todoItem.item"
         class="shadow"
       >
@@ -26,39 +26,14 @@
 
 <script>
 export default {
-  data: function () {
-    return {
-      // todo list 목록을 담을 data
-      todoItems: [],
-    };
-  },
+  props: ["propsdata"],
   methods: {
     removeTodo(todoItem, index) {
-      // localStorage 아이템 삭제
-      localStorage.removeItem(todoItem);
-      this.todoItems.splice(index, 1);
+      this.$emit("removeItem", todoItem, index);
     },
-    toggleComplete(todoItem) {
-      todoItem.completed = !todoItem.completed;
-      // 로컬스토리지의 completed(완료 여부)를 갱신
-      // 로컬스토리지는 update가 없음. 삭제하고 다시 삽입
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    toggleComplete(todoItem, index) {
+      this.$emit("toggleItem", todoItem, index);
     },
-  },
-  // 인스턴스가 생성되자 마자 호출되는 라이프사이클 훅
-  created: function () {
-    if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        // 로컬스토리지의 데이터를 todoItems에 배열로 담음
-        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
-          // 로컬스토리지에서 꺼낼 때는 JSON.parse
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-        }
-      }
-    }
   },
 };
 </script>
