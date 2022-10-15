@@ -2,13 +2,13 @@
   <div>
     <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, index) in this.$store.state.todoItems"
+        v-for="(todoItem, index) in this.storedTodoItems"
         :key="todoItem.item"
         class="shadow"
       >
         <span
           class="checkBtn btn"
-          @click="toggleComplete(todoItem, index)"
+          @click="toggleComplete({ todoItem, index })"
           v-bind:class="{ checkBtnCompleted: todoItem.completed }"
           >✔️</span
         >
@@ -16,7 +16,7 @@
         <span v-bind:class="{ textCompleted: todoItem.completed }">{{
           todoItem.item
         }}</span>
-        <span class="removeBtn btn" @click="removeTodo(todoItem, index)"
+        <span class="removeBtn btn" @click="removeTodo({ todoItem, index })"
           >🗑️</span
         >
       </li>
@@ -25,21 +25,33 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   methods: {
-    removeTodo(todoItem, index) {
-      this.$store.commit("removeOneItem", {
-        todoItem,
-        index,
-      });
-    },
-    toggleComplete(todoItem, index) {
-      this.$store.commit("toggleOneItem", {
-        todoItem,
-        index,
-      });
-      // this.$emit("toggleItem", todoItem, index);
-    },
+    ...mapMutations({
+      removeTodo: "removeOneItem",
+      toggleComplete: "toggleOneItem",
+      // 기존에 commit을 사용할 땐 넘겨주는 인자를 명시해줬지만 mapMutations를 사용할 땐 명시해주지 않아도 된다.
+      // 다만 template 부분에서 removeTodo 사용시에 인자를 객체로 묶어서 넘겨주기만 하면 된다.
+      // @click="removeTodo(todoItem, index)" -> @click="removeTodo({ todoItem, index })"
+    }),
+    // removeTodo(todoItem, index) {
+    //   this.$store.commit("removeOneItem", {
+    //     todoItem,
+    //     index,
+    //   });
+    // },
+    // toggleComplete(todoItem, index) {
+    //   this.$store.commit("toggleOneItem", {
+    //     todoItem,
+    //     index,
+    //   });
+    //   // this.$emit("toggleItem", todoItem, index);
+    // },
+  },
+  computed: {
+    ...mapGetters(["storedTodoItems"]),
   },
 };
 </script>
